@@ -38,26 +38,58 @@
                 <div class="row">
                     <div class="col">
                         <header class="section-header">
-                            <ul class="nav">
-                                <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
+                            <ul class="nav" id="filters">
+                                <li class="nav-item active"><a href="#" class="nav-link" data-filter="*">Show All</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link" data-filter=".2018">2018</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link" data-filter=".2017">2017</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link" data-filter=".2015">2015</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link" data-filter=".2012">2012</a></li>
                             </ul>
                         </header>
                     </div>
                 </div>
                 <div class="row gallery">
-                        <ul>
-                                <li class="gallery__item">
-                                  <a class="gallery__itemLink" href="assets/img/installation-tile.jpg" data-rel="aiLightbox">
-                                    <img class="gallery__itemThumb" src="assets/img/installation-tile.jpg">
-                                  </a>
-                                </li>
-                                <li class="gallery__item">
-                                        <a class="gallery__itemLink" href="assets/img/living-room-1.jpg" data-rel="aiLightbox">
-                                          <img class="gallery__itemThumb" src="assets/img/installation-tile.jpg">
-                                        </a>
-                                      </li>
-                               
-                            </ul>
+                    <div class="gallery-sizer col-lg-3 col-md-4 col-sm-6"></div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6 2018">
+                        <a href="http://via.placeholder.com/1000x350" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x150">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6 2018">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x350">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6 2017">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x750">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6 2017">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x100">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x350">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x350">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x100">
+                        </a>
+                    </div>
+                    <div class="gallery-item  col-lg-3 col-md-4 col-sm-6">
+                        <a href="assets/img/installation-tile.jpg" data-rel="aiLightbox" data-captions="<h3>HIGH FLY</h3><p>digital print and gold paint on paper<br />250×80 (10 panels)<br />2015</p>">
+                            <img class="" src="http://via.placeholder.com/350x350">
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -80,10 +112,27 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="assets/js/swipe.js"></script>
+    <script src="assets/js/scripts.js"></script>
     <script src="assets/js/lightbox.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script>
-    $('.gallery  a').simpleLightbox();
+        $('.gallery  a').simpleLightbox();
+        $('#filters').on( 'click', 'a', function(e) {
+            e.preventDefault();
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active')
+            $('.gallery').isotope({
+                filter: $( this ).attr('data-filter')
+            });
+            
+        });
+        $('.gallery').isotope({
+                itemSelector: '.gallery-item',
+                percentPosition: true,
+                masonry: {
+                    columnWidth: '.gallery-sizer'
+                },
+            })
 </script>
 </body>
 </html>

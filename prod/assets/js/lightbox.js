@@ -25,8 +25,8 @@
 
         // add custom classes to lightbox elements
         elementClass: '',
-        elementLoadingClass: 'slbLoading',
-        htmlClass: 'slbActive',
+        elementLoadingClass: 'lb-loading',
+        htmlClass: 'lb-active',
         closeBtnClass: '',
         nextBtnClass: '',
         prevBtnClass: '',
@@ -44,7 +44,7 @@
         nextOnImageClick: true,
         showCaptions: true,
 
-        captionAttribute: 'title', // choose data source for library to glean image caption from
+        captionAttribute: 'data-captions', // choose data source for library to glean image caption from
         urlAttribute: 'href', // where to expect large image
 
         startAt: 0, // start gallery at custom index
@@ -65,7 +65,7 @@
         init: function(options) {
 
             this.options = $.extend({}, SimpleLightbox.defaults, options);
-            this.ens = '.slb' + (++instanceNum);
+            this.ens = '.lb-' + (++instanceNum);
             this.items = [];
             this.captions = [];
 
@@ -147,7 +147,7 @@
 
                     self.$el.addClass(self.options.elementLoadingClass);
 
-                    self.$content.html('<p class="slbLoadingText ' + self.options.loadingTextClass + '">' + self.options.loadingCaption + '</p>');
+                    self.$content.html('<p class="lb-loadingText ' + self.options.loadingTextClass + '">' + self.options.loadingCaption + '</p>');
                     self.show();
 
                 }, this.options.loadingTimeout);
@@ -170,16 +170,16 @@
 
             if (this.options.videoRegex.test(url)) {
 
-                callback.call(self, $('<div class="slbIframeCont"><iframe class="slbIframe" frameborder="0" allowfullscreen src="' + url + '"></iframe></div>'));
+                callback.call(self, $('<div class="lb-frame-container"><iframe class="lb-frame" frameborder="0" allowfullscreen src="' + url + '"></iframe></div>'));
 
             } else {
 
-                var $imageCont = $('<div class="slbImageWrap"><img class="slbImage" src="' + url + '" /></div>');
+                var $imageCont = $('<div class="lb-image-wrap"><img class="lb-image" src="' + url + '" /></div>');
 
-                this.$currentImage = $imageCont.find('.slbImage');
+                this.$currentImage = $imageCont.find('.lb-image');
 
                 if (this.options.showCaptions && this.captions[position]) {
-                    $imageCont.append('<div class="slbCaption">' + this.captions[position] + '</div>');
+                    $imageCont.append('<div class="lb-caption">' + this.captions[position] + '</div>');
                 }
 
                 this.loadImage(url, function() {
@@ -217,31 +217,29 @@
             if (!this.$el) {
 
                 this.$el = $(
-                    '<div class="slbElement ' + o.elementClass + '">' +
-                        '<div class="slbOverlay"></div>' +
-                        '<div class="slbWrapOuter">' +
-                            '<div class="slbWrap">' +
-                                '<div class="slbContentOuter">' +
-                                    '<div class="slbContent"></div>' +
-                                    '<button type="button" title="' + o.closeBtnCaption + '" class="slbCloseBtn ' + o.closeBtnClass + '">×</button>' +
-                                '</div>' +
+                    '<div class="lb-element ' + o.elementClass + '">' +
+                        '<div class="lb-overlay"></div>' +
+
+                            '<div class="lb-content-outer">' +
+                                '<div class="lb-content"></div>' +
+                                '<a href="#" class="btn lb-close-btn ' + o.closeBtnClass + '"><svg class="icon"><use xlink:href="assets/img/symbol-defs.svg#icon-close"></use></svg></a>' +
                             '</div>' +
-                        '</div>' +
+                            
                     '</div>'
                 );
 
                 if (this.items.length > 1) {
 
                     $(
-                        '<div class="slbArrows">' +
-                            '<button type="button" title="' + o.prevBtnCaption + '" class="prev slbArrow' + o.prevBtnClass + '">' + o.prevBtnCaption + '</button>' +
-                            '<button type="button" title="' + o.nextBtnCaption + '" class="next slbArrow' + o.nextBtnClass + '">' + o.nextBtnCaption + '</button>' +
+                        '<div class="lb-arrows">' +
+                            '<a href="#" class="btn prev lb-arrow' + o.prevBtnClass + '"><svg class="icon"><use xlink:href="assets/img/symbol-defs.svg#icon-prev"></use></svg></a>' +
+                            '<a href="#" class="btn next lb-arrow' + o.nextBtnClass + '"><svg class="icon"><use xlink:href="assets/img/symbol-defs.svg#icon-next"></use></svg></a>' +
                         '</div>'
-                    ).appendTo(this.$el.find('.slbContentOuter'));
+                    ).appendTo(this.$el.find('.lb-content-outer'));
 
                 }
 
-                this.$content = this.$el.find('.slbContent');
+                this.$content = this.$el.find('.lb-content');
 
             }
 
@@ -294,18 +292,18 @@
             if (!this.lightboxEventsSetuped) {
 
                 this.$el.on('click' + this.ens, function(e) {
-
+                    e.preventDefault();
                     var $target = $(e.target);
 
-                    if ($target.is('.slbCloseBtn') || (self.options.closeOnOverlayClick && $target.is('.slbWrap'))) {
-
+                    if ($target.is('.lb-close-btn') || (self.options.closeOnOverlayClick && $target.is('.lb-content-outer'))) {
+                        
                         self.close();
 
-                    } else if ($target.is('.slbArrow')) {
-
+                    } else if ($target.is('.lb-arrow')) {
+                        
                         $target.hasClass('next') ? self.next() : self.prev();
 
-                    } else if (self.options.nextOnImageClick && self.items.length > 1 && $target.is('.slbImage')) {
+                    } else if (self.options.nextOnImageClick && self.items.length > 1 && $target.is('.lb-image')) {
 
                         self.next();
 

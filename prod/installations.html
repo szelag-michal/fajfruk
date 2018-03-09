@@ -246,5 +246,16 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script src="assets/js/scripts.js"></script>
+    <script>
+        $('#filters').on( 'click', 'a', function(e) {
+            e.preventDefault();
+            $(this).parent().addClass('active');
+            $(this).parent().siblings().removeClass('active')
+            $('.listing').isotope({
+                itemSelector: 'article', 
+                filter: $( this ).attr('data-filter')
+            });
+        });
+    </script>
 </body>
 </html>
