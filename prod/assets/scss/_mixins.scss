@@ -1,0 +1,28 @@
+
+  @mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie);
+  }
+  
+
+  
+  @mixin radius($val:$radius) {
+   -webkit-border-radius:  $val;
+      -moz-border-radius:  $val;
+       -ms-border-radius:  $val;
+           border-radius:  $val;
+  }
+  
+  @mixin fade($time: 200ms, $target: all, $timing-function: ease-in-out) {
+      -webkit-transition: $target $time $timing-function;
+      -moz-transition:  $target $time $timing-function;
+      transition:  $target $time $timing-function;
+  }
+  
+  @mixin placeholder ($val:$color-primary) {
+      .form-control::-webkit-input-placeholder {color: $val;}
+      .form-control:-moz-placeholder {color: $val;opacity:  1;}
+      .form-control::-moz-placeholder {color: $val;opacity: 1;}
+      .form-control:-ms-input-placeholder {color: $val;}
+  }

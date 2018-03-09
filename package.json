@@ -1,0 +1,31 @@
+{
+  "name": "floweb_theme_2018",
+  "version": "1.0.0",
+  "description": "Flo Web Design",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-env": "^1.6.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-html": "^0.4.7",
+    "gulp-htmlsplit": "^1.1.1",
+    "gulp-split-files": "^1.2.3",
+    "run-sequence": "^2.2.1"
+  },
+  "devDependencies": {
+    "bourbon": "^5.0.0",
+    "browser-sync": "^2.23.6",
+    "gulp-font": "^1.0.4",
+    "gulp-sass": "^3.1.0",
+    "node-sass": "^4.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "floweb_theme_2018"
+  },
+  "author": "Flo Web Design",
+  "license": "ISC"
+}
